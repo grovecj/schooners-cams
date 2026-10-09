@@ -60,6 +60,8 @@
 
   <script>
     // Stream pages hosted by Destination Network (the same ones schooners.com embeds).
+    // The host rejects (403) requests whose Referer is not on its allowlist, so the
+    // iframes send none. That can stop working if the host starts blocking that too.
     const CAMS = [
       { name: "Beach Cam",    src: "https://media5.tripsmarter.com/includes/schooners-beach-cam-responsive.php",    page: "https://schooners.com/multimedia/beachcam.htm" },
       { name: "Sunset Cam",   src: "https://media5.tripsmarter.com/includes/schooners-sunset-cam-responsive.php",   page: "https://schooners.com/multimedia/sunsetcam.htm" },
@@ -73,7 +75,7 @@
       card.innerHTML = `
         <h2>${cam.name} <a href="${cam.page}" target="_blank" rel="noopener">schooners.com ↗</a></h2>
         <div class="frame">
-          <iframe src="${cam.src}" title="${cam.name}" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
+          <iframe src="${cam.src}" title="${cam.name}" referrerpolicy="no-referrer" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
         </div>`;
       grid.appendChild(card);
     }
